@@ -11,6 +11,9 @@ export async function POST(req) {
   try {
     const body = await req.json();
     const {title, description, priority, progress, status, category} = body
+    if(!title || !description){
+      return NextResponse.json({message: "Please Fill out the Required Fields"}, {status: 500})
+    }
     //add validation for missing fields here 
     await Ticket.create({title, description, priority, progress, status, category});
     return NextResponse.json({ message: "Ticket Created" }, { status: 201 });

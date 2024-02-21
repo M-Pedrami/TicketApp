@@ -16,7 +16,6 @@ const TicketForm = () => {
   });
   const handleSubmit = async () => {
     try {
-      console.log("HandleSubmit Clicked");
       const response = await fetch("/api/createticket", {
         method: "POST",
         body: JSON.stringify(ticketData),
@@ -29,7 +28,8 @@ const TicketForm = () => {
         router.push("/");
       }
       if (!response.ok) {
-        toast.error("Ticket Failed");
+        const data = await response.json()
+        toast.error(`Ticket Submission Failed: ${data.message && data.message}`);
         console.log("error from handlesubmit IF Statement");
       }
     } catch (error) {
