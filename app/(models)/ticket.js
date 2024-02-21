@@ -1,7 +1,5 @@
 import mongoose, { Schema } from "mongoose";
 
-mongoose.connect(process.env.MONGOOSE_URI);
-
 const ticketSchema = new Schema(
   {
     title: String,
