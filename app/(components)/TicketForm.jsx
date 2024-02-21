@@ -17,7 +17,7 @@ const TicketForm = () => {
   const handleSubmit = async () => {
     try {
       console.log("HandleSubmit Clicked");
-      const response = await fetch("/api/Tickets", {
+      const response = await fetch("/api/createticket", {
         method: "POST",
         body: JSON.stringify(ticketData),
         headers: {
