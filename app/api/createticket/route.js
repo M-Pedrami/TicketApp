@@ -3,7 +3,7 @@ import connectDB from "../../(utils)/db.js";
 connectDB();
 
 //Ticket Schema
-import Ticket from "../../(models)/ticket.js";
+import Ticket from "@/app/(models)/ticket.js";
 
 import { NextResponse } from "next/server";
 
