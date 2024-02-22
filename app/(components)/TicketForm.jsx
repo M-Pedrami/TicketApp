@@ -26,6 +26,7 @@ const TicketForm = () => {
       if (response.ok) {
         toast.success("Ticket Created");
         router.push("/");
+        router.refresh()
       }
       if (!response.ok) {
         const data = await response.json()
