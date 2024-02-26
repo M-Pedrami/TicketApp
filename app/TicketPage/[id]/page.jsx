@@ -1,7 +1,8 @@
 import TicketForm from "@/app/(components)/TicketForm";
+const BASE_URL = process.env.BASE_URL || "http://localhost:3000"
 const getTicket = async (id) => {
   try {
-    const response = await fetch(`http://localhost:3000/api/getticket/${id}`, {
+    const response = await fetch(`${BASE_URL}/api/getticket/${id}`, {
       cache: "no-store",
     });
     if (response.ok) {

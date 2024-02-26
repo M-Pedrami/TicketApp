@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
+const BASE_URL = process.env.BASE_URL || ""
 
 const TicketForm = ({ ticket }) => {
   const EDITMODE = ticket._id === "new" ? false : true;
@@ -18,7 +19,7 @@ const TicketForm = ({ ticket }) => {
   const handleSubmit = async () => {
     if (!EDITMODE){
     try {
-      const response = await fetch("/api/createticket", {
+      const response = await fetch(`${BASE_URL}/api/createticket`, {
         method: "POST",
         body: JSON.stringify(ticketData),
         headers: {
@@ -41,7 +42,7 @@ const TicketForm = ({ ticket }) => {
       console.log("Error from handleSubmit CATCH", error);
     }} else {
       try {
-        const response = await fetch(`/api/updateticket/${ticket._id}`, {
+        const response = await fetch(`${BASE_URL}/api/updateticket/${ticket._id}`, {
           method: "PUT",
           body: JSON.stringify(ticketData),
           headers: {
