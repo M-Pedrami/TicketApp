@@ -23,7 +23,7 @@ const DeleteBlock = ({id}) => {
     }
   }
   return (
-    <TiDelete className="text-red-400 hover:text-red-200 cursor-pointer text-xl" onClick={handleDelete} />
+    <TiDelete className="text-red-400 hover:text-red-200 cursor-pointer text-xl absolute right-2 top-4"  onClick={handleDelete} />
   );
 };
 
