@@ -4,17 +4,19 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
-const TicketForm = () => {
+const TicketForm = ({ ticket }) => {
+  const EDITMODE = ticket._id === "new" ? false : true;
   const router = useRouter();
   const [ticketData, setTicketData] = useState({
-    title: "",
-    description: "",
-    priority: 1,
-    progress: 0,
-    status: "not started",
-    category: "Hardware Problem",
+    title: ticket.title || "",
+    description:ticket.description || "",
+    priority:ticket.priority || 1,
+    progress:ticket.progress || 0,
+    status:ticket.status || "not started",
+    category:ticket.category || "Hardware Problem",
   });
   const handleSubmit = async () => {
+    if (!EDITMODE){
     try {
       const response = await fetch("/api/createticket", {
         method: "POST",
@@ -26,21 +28,47 @@ const TicketForm = () => {
       if (response.ok) {
         toast.success("Ticket Created");
         router.push("/");
-        router.refresh()
+        router.refresh();
       }
       if (!response.ok) {
-        const data = await response.json()
-        toast.error(`Ticket Submission Failed: ${data.message && data.message}`);
+        const data = await response.json();
+        toast.error(
+          `Ticket Submission Failed: ${data.message && data.message}`
+        );
         console.log("error from handlesubmit IF Statement");
       }
     } catch (error) {
       console.log("Error from handleSubmit CATCH", error);
+    }} else {
+      try {
+        const response = await fetch(`/api/updateticket/${ticket._id}`, {
+          method: "PUT",
+          body: JSON.stringify(ticketData),
+          headers: {
+            "content-type": "application/json",
+          },
+        });
+        if (response.ok) {
+          toast.success("Ticket Updated");
+          router.push("/");
+          router.refresh();
+        }
+        if (!response.ok) {
+          const data = await response.json();
+          toast.error(
+            `Ticket Update Failed: ${data.message && data.message}`
+          );
+          console.log("error from handlesubmit IF Statement");
+        }
+      } catch (error) {
+        console.log("Error from handleSubmit CATCH", error);
+      }
     }
   };
   return (
     <div className="flex justify-center">
       <div className="flex flex-col gap-3 w-1/2" method="post">
-        <h3>Create Your Ticket</h3>
+        <h3>{EDITMODE ? "Update Ticket" : "Create Ticket"}</h3>
         <label>Title</label>
         <input
           type="text"
@@ -191,7 +219,7 @@ const TicketForm = () => {
           <option value="done">Done</option>
         </select>
         <button className="btn max-w-xs" onClick={handleSubmit}>
-          Create Ticket
+          {EDITMODE ? "Update Ticket" : "Create Ticket"}
         </button>
       </div>
     </div>

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import DeleteBlock from "./DeleteBlock";
 import Priority from "./Priority";
 import ProgressBar from "./ProgressBar";
@@ -19,6 +20,7 @@ const TicketCard = ({ticket}) => {
   };
   const dateCreated = formatDate(ticket.createdAt)
   return (
+    <Link href={`/TicketPage/${ticket._id}`} style={{display: "contents"}}>
     <div className="flex flex-col bg-card hover:bg-card-hover rounded-md shadow-lg p-3 m-2">
       <div className="flex mb-3">
         <Priority priority={ticket.priority} />
@@ -42,6 +44,7 @@ const TicketCard = ({ticket}) => {
         </div>
       </div>
     </div>
+    </Link>
   );
 };
 
