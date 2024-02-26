@@ -6,6 +6,7 @@ connectDB();
 import Ticket from "../../(models)/ticket.js";
 
 import { NextResponse } from "next/server";
+export const dynamic = 'force-dynamic'
 
 export async function GET(){
   try {
